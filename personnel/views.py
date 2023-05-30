@@ -4,7 +4,7 @@ from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIVi
 from .models import Department,Personnel
 
 
-class DepartmentListView(ListCreateAPIView):
+class DepartmentListCreateView(ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
 
@@ -15,7 +15,7 @@ class DepartmentCreateUpdateView(RetrieveUpdateDestroyAPIView):
     serializer_class = DepartmentSerializer
 
 
-class PersonnelListView(ListCreateAPIView):
+class PersonnelListCreateView(ListCreateAPIView):
     queryset = Personnel.objects.all()
     serializer_class = PersonnelSerializer
 
