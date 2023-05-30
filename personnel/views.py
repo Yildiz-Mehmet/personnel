@@ -10,7 +10,7 @@ class DepartmentListCreateView(ListCreateAPIView):
 
 
 
-class DepartmentCreateUpdateView(RetrieveUpdateDestroyAPIView):
+class DepartmentRUDView(RetrieveUpdateDestroyAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
 
@@ -21,6 +21,6 @@ class PersonnelListCreateView(ListCreateAPIView):
 
 
 
-class PersonnelCreateUpdateView(RetrieveUpdateDestroyAPIView):
+class PersonnelRUDView(RetrieveUpdateDestroyAPIView):
     queryset = Personnel.objects.all()
     serializer_class = PersonnelSerializer
