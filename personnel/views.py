@@ -35,4 +35,7 @@ class DepartmentPersonnelView(ListAPIView):
     def get_queryset(self):
 
         department = self.kwargs['department']
-        return Department.objects.filter(name__iexact=department)
+
+        if department is not None:
+
+            return Department.objects.filter(name__iexact=department)

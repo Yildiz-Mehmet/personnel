@@ -190,3 +190,36 @@ urlpatterns = [
 
 # nested serializers => personnel will lined up under department
 
+# serializers.py =>
+
+```py
+class DepartmentPersonnelSerializer(serializers.ModelSerializer):
+
+    personnel = PersonnelSerializer(many=True, read_only=True)
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+```
+
+# views.py =>
+
+```py
+class DepartmentPersonnelView(ListAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentPersonnelSerializer
+
+
+    def get_queryset(self):
+
+        department = self.kwargs['department']
+        return Department.objects.filter(name__iexact=department)
+```
+
+# models use related name => python manage.py makemigrations => python manage.py migrate
+
+```py
+
+department_id = models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,related_name='personnel')
+
+```

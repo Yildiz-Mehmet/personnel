@@ -21,4 +21,4 @@ class DepartmentPersonnelSerializer(serializers.ModelSerializer):
     personnel = PersonnelSerializer(many=True, read_only=True)
     class Meta:
         model = Department
-        fields = '__all__'
+        fields = ('id','name','personnel')
