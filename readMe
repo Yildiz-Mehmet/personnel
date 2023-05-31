@@ -83,3 +83,20 @@ class Personnel(models.Model):
         return self.first_name +'-'+self.last_name
 
 ```
+
+# after create models
+
+- python manage.py makemigrations
+
+- python manage.py migrate
+
+# for see in admin
+
+```py
+from .models import Department, Personnel
+
+admin.site.register(Department)
+admin.site.register(Personnel)
+
+
+```
