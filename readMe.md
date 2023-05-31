@@ -223,3 +223,29 @@ class DepartmentPersonnelView(ListAPIView):
 department_id = models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,related_name='personnel')
 
 ```
+
+# we will write custom permission
+
+# build permissions.py
+
+```py
+from rest_framework.permissions import IsAdminUser,SAFE_METHODS
+
+class IsAdminOrReadOnly(IsAdminUser):
+
+    def has_permission(self, request, view):
+
+
+        if request.method in SAFE_METHODS:
+            return True
+        return bool(request.user and request.user.is_staff)
+```
+
+# add this you want all views
+
+```py
+    permission_classes = (
+        IsAuthenticated,
+        IsAdminOrReadOnly,
+    )
+```
