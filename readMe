@@ -100,3 +100,92 @@ admin.site.register(Personnel)
 
 
 ```
+
+# create serializers.py =>
+
+```py
+from rest_framework import serializers
+from .models import Department,Personnel
+
+class DepartmentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+class PersonnelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Personnel
+        fields = '__all__'
+
+
+```
+
+# now there is a views.py => we have to make a decision that what will be in view
+
+```py
+
+from django.shortcuts import render
+from .serializers import DepartmentSerializer,PersonnelSerializer
+from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
+from .models import Department,Personnel
+
+class DepartmentListCreateView(ListCreateAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+
+class PersonnelListCreateView(ListCreateAPIView):
+    queryset = Personnel.objects.all()
+    serializer_class = PersonnelSerializer
+
+
+class PersonnelRUDView(RetrieveUpdateDestroyAPIView):
+    queryset = Personnel.objects.all()
+    serializer_class = PersonnelSerializer
+
+
+
+class DepartmentRUDView(RetrieveUpdateDestroyAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+```
+
+# now there is urls.py => create personnel.urls
+
+```py
+
+from django.urls import path,include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('personnel.urls')),
+]
+
+
+
+```
+
+# personnel urls.py =>
+
+```py
+
+from django.urls import path
+from .views import DepartmentListCreateView,DepartmentRUDView,PersonnelListCreateView,PersonnelRUDView,DepartmentPersonnelView
+
+urlpatterns = [
+    path('departments/',DepartmentListCreateView.as_view()),
+    path('departments/<int:pk>/',DepartmentRUDView.as_view()),
+    path('personnels/',PersonnelListCreateView.as_view()),
+    path('personnels/<int:pk>/',PersonnelRUDView.as_view()),
+    # path('department-personnels/',DepartmentPersonnelView.as_view()),
+    path('department<str:department>/',DepartmentPersonnelView.as_view()),
+]
+
+```
+
+# nested serializers => personnel will lined up under department
