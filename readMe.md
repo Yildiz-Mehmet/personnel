@@ -362,3 +362,22 @@ from .models import Profile
 admin.site.register(Profile)
 
 ```
+
+## main => urls.py =>
+
+```py
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    # ... the rest of your URLconf goes here ...
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+# settings.py =>
+
+```py
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+```
