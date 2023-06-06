@@ -281,6 +281,7 @@ permission_classes =[IsAuthenticated]
 # build users for authentication with token
 
 - python manage.py startapp users
+- add to ınstalled_apps
 
 ```py
 REST_FRAMEWORK = {
@@ -328,3 +329,26 @@ urlpatterns = [
 ]
 
 ```
+
+## users => models.py =>
+
+```py
+from django.db import models
+from django.contrib.auth.models import User
+
+class Profile(models.Model):
+    image = models.ImageField(upload_to="images",default="avatar")
+    about = models.TextField(blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name
+
+
+```
+
+## Since we builted somethings in database,run makemigrations
+
+- python manage.py makemigrations
+- pip freeze > requirements.txt
+- python manage.py migrate
